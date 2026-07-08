@@ -1,4 +1,3 @@
-cat << 'EOF' > app.js
 const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -14,4 +13,3 @@ if (require.main === module) {
         console.log(`Application is running on port ${PORT}`);
     });
 }
-EOF
