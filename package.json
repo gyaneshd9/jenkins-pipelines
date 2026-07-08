@@ -1,0 +1,13 @@
+{
+  "name": "jenkins-practice-app",
+  "version": "1.0.0",
+  "description": "A simple app to practice Jenkins pipelines",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "test": "node test.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
