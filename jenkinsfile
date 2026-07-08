@@ -1,0 +1,44 @@
+pipeline {
+    agent {
+        docker {
+            image 'node:20-alpine'
+            reuseNode true 
+        }
+    }
+    
+    environment {
+        // This forces npm to write its cache inside the Jenkins workspace folder
+        // where the jenkins user has 100% read/write access permissions
+        npm_config_cache = "${WORKSPACE}/.npm-cache"
+    }
+    
+    stages {
+        stage('Git checkout') {
+            steps {
+                echo 'trying to connect git, cloning repo'
+                git branch: 'main', url: 'https://github.com/gyaneshd9/jenkins-pipelines.git'
+                echo 'Verifying downloaded assets inside container:'
+                sh 'ls -la'
+            }
+        }
+        stage('Build package') {
+            steps {
+                echo 'Running npm install inside the container environment...'
+                sh 'npm install'
+            }
+        }
+        stage('Test App') {
+            steps {
+                echo 'Executing your test file...'
+                sh 'npm test'
+            }
+        }
+        stage('Deploy App') {
+            steps {
+                echo 'deployment of application successfully...'
+                sh "sleep 120"
+                input message: 'Is the application URL working correctly? Click Proceed to finish deployment.', ok: 'Proceed'
+            }
+        }
+    }
+}
